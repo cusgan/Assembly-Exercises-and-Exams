@@ -1,0 +1,4 @@
+@echo off
+TASM %1.ASM
+TLINK %1.OBJ IO.OBJ
+%1.EXE
