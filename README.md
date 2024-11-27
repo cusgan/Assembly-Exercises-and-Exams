@@ -4,16 +4,29 @@ This repository contains TASM assembly files for exercises and exams for the **C
 
 Executing files directly in **VSCode using the MASM/TASM extension** is possible. However, executing on **DOSBox** is recommended for accuracy of the screen output (especially with colored text).
 
-## Mounting DOSBox
+## DOSBox Options
 
-1. Open the DOSBox Options application.
-2. Scroll to the end until you reach `[autoexec]`.
-3. After autoexec, place your mount commands to your desired directory, e.g. in this case, `C:\Documents\TASM`.
-   
+Open the DOSBox Options application to adjust settings for convenience.
+
+### Automatic Mounting 
+
+1. Scroll to the end until you reach `[autoexec]`.
+2. After autoexec, place your mount commands to your desired directory, e.g. in this case, `C:\Documents\TASM`.
+3. 
     ```
     MOUNT C: "C:\Documents\TASM"
     C:
     ```
+4. Save changes.
+   
+### Increasing Screen Size
+
+1. Scroll until you reach `[render]`.
+2. Find `scaler=normal2x`. Type `forced` on the same line. It should look like this:
+
+   ``` scaler=normal2x forced ```
+
+4. Save changes.
 
 ## Quick Execute on DOSBox
 
