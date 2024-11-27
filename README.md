@@ -17,7 +17,15 @@ Executing files directly in **VSCode using the MASM/TASM extension** is possible
 
 ## Quick Execute on DOSBox
 
-Given the ASM file `myfile.asm`, run either the command `compile myfile.asm` (for most files) or the command `io myfile.asm` (for files using IO library) to quickly compile.
+Given the ASM file `myfile.asm`, run either of the following commands:
+
+1. For most files: 
+   
+   ```compile myfile.asm```
+   
+2.  For files using the IO library: 
+   
+      ```io myfile.asm```
 
 These commands utilize the `compile.bat` and `io.bat` files.
 
