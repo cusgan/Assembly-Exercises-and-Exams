@@ -3,9 +3,9 @@
 This is where you will find what each ASM file in this repository contains and does.
 
 ### Table of Contents
-1. [Hands-On Exams](#Hands-On Exams)
-2. [Hands-On Exercises](#Hands-On Exercises)
-3. [Major Examinations](#Major Examinations)
+1. [Hands-On Exams](#Hands-On-Exams)
+2. [Hands-On Exercises](#Hands-On-Exercises)
+3. [Major Examinations](#Major-Examinations)
 
 ## Hands-On Exams
 
