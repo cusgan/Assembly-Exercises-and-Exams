@@ -1,0 +1,300 @@
+; Filename: FINAL.ASM
+; CS243 Lab Hands-on Final Exam 
+; First Semester SY 2024-2025
+; Student Name: FELISA MELANIE FAY G. BASCUG
+; Date Finished: December 12, 2024
+
+.model small
+.stack 100
+.data
+    cit     db  'Cebu Institute of Technology - University$'
+    ccs     db  'College of Computer Studies$'
+    favcls  db  'FAVORITE CLASSMATE VOTING SYSTEM$'
+    progr   db  'Programmer: FELISA MELANIE FAY G. BASCUG$'
+
+    menu    db  'MAIN MENU$'
+    
+    vote    db  'Vote$' ; 4
+    view    db  'View$' ; 4
+    update  db  'Update$' ; 6
+    delete  db  'Delete$' ; 6
+    exit    db  'Exit$' ; 4
+
+    vote_promptname   db 'Enter candidate name: $'
+    vote_promptrate   db 'Enter vote rating (1-100): $'
+
+    view_norecord   db 'No record found.$'
+
+    update_promptnum    db 'Enter record number to update: $'
+    update_promptname   db 'Enter new candidate name: $'
+    update_promptrate   db 'Enter new vote rating (1-100): $'
+
+    delete_prompt   db 'Enter record number to delete: $'
+    delete_success  db 'Record deleted.$'
+
+    exiting db  'Exiting...$'
+    thanks  db  'Thank you for using Favorite Classmate Voting System.$'
+
+    choice  db  'Enter choice: $'
+    anykey  db  'Press any key to go back to Main Menu...$'
+    error   db  'Error: Invalid input!$' ; 21
+
+    num1 db '1. $'
+    num2 db '2. $'
+    num3 db '3. $'
+    num4 db '4. $'
+    num5 db '5. $'
+    dash db ' - $'
+
+	inputChoice DB ?    ; variable to store the input character
+    MAX_STR_LEN equ 11
+    buffer0 DB MAX_STR_LEN dup ('$')
+    buffer1 DB MAX_STR_LEN dup ('$')
+    buffer2 DB MAX_STR_LEN dup ('$')
+    buffer3 DB MAX_STR_LEN dup ('$')
+    bufferN DW 0
+    bufferN2 DW 0
+    inbf db  MAX_STR_LEN,?,MAX_STR_LEN dup('$')
+
+    record1 db 50, ?, 50 dup(' ')
+    record2 db 50, ?, 50 dup(' ')
+    record3 db 50, ?, 50 dup(' ')
+    record4 db 50, ?, 50 dup(' ')
+    record5 db 50, ?, 50 dup(' ')
+    
+    bufferDB    DB MAX_STR_LEN dup('$')
+studentsDB  DB 'asss$$$$$$$'
+            DB 'basil$$$$$$'
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+            DB MAX_STR_LEN dup('$')
+
+scoresDB    DB 1
+            DB 2
+            DB 3
+            DB 4
+            DB 5
+            DB 255
+            DB 255
+            DB 255
+            DB 255
+            DB 255
+
+.code
+include MYIO.MAC
+
+print_header proc far
+    Print cit 
+    nwln
+    Print ccs 
+    nwln
+    Print favcls
+    nwln
+    Print progr
+    nwln
+    nwln
+retf
+print_header endp
+
+print_menu proc far
+    Print menu 
+    nwln 
+
+    Print num1
+    Color 4FH, 4 ; red
+    Print vote 
+    nwln 
+
+    Print num2 
+    Color 1FH, 4 ; blue
+    Print view 
+    nwln 
+
+    Print num3 
+    Color 2FH, 6 ; green
+    Print update
+    nwln 
+
+    Print num4 
+    Color 5FH, 6 ; purple
+    Print delete 
+    nwln 
+
+    Print num5 
+    Print exit 
+    nwln
+
+    Print choice
+retf
+print_menu endp
+
+vote_menu proc far 
+    CALL clear_screen 
+    CALL print_header
+
+    Color 4FH, 4 
+    Print vote 
+    nwln 
+
+    Print vote_promptname 
+    nwln 
+
+    Print vote_promptrate
+    nwln 
+    nwln
+
+    Print anykey
+    MOV ah, 01h
+    INT 21h
+    call main
+retf
+vote_menu endp
+
+view_menu proc far 
+    CALL clear_screen 
+    CALL print_header
+
+    Color 1FH, 4 
+    Print view 
+    nwln 
+
+    Print view_norecord
+    nwln
+    nwln
+
+    ListRecords
+
+    Print anykey
+    MOV ah, 01h
+    INT 21h
+    call main
+retf
+view_menu endp
+
+update_menu proc far 
+    CALL clear_screen 
+    CALL print_header
+
+    Color 2FH, 6 
+    Print update 
+    nwln 
+
+    Print update_promptnum 
+    nwln 
+
+    Print update_promptname
+    nwln 
+
+    Print update_promptrate
+    nwln 
+    nwln
+
+    Print anykey
+    MOV ah, 01h
+    INT 21h
+    call main
+retf
+update_menu endp
+
+delete_menu proc far 
+    CALL clear_screen 
+    CALL print_header
+
+    Color 4FH, 6
+    Print delete 
+    nwln 
+
+    Print delete_prompt
+    nwln 
+
+    Print delete_success
+    nwln 
+    nwln
+
+    Print anykey
+    MOV ah, 01h
+    INT 21h
+    call main
+retf
+delete_menu endp
+
+exit_menu proc far 
+    nwln 
+    nwln
+    Print exiting
+    nwln 
+    Print thanks
+    nwln
+retf
+exit_menu endp 
+
+raise_error proc far 
+    nwln
+    nwln 
+    Color 11001110B, 21
+    Print error
+    nwln 
+    nwln
+    Print anykey
+    MOV ah, 01h
+    INT 21h
+    call main
+raise_error endp
+
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    call clear_screen
+    call print_header
+    call print_menu
+
+    MOV AH, 01H
+    INT 21H
+    MOV inputChoice, AL
+    CMP AL, '1'
+    JE main_choice_1
+    CMP AL, '2'
+    JE main_choice_2
+    CMP AL, '3'
+    JE main_choice_3
+    CMP AL, '4'
+    JE main_choice_4
+    CMP AL, '5'
+    JE main_choice_5
+    JMP main_choice_other
+    main_choice_1: ; vote
+        CALL vote_menu
+        JMP main_choice_end
+        RETF
+    main_choice_2: ; view
+        CALL view_menu
+        JMP main_choice_end
+        RETF
+    main_choice_3: ; update
+        CALL update_menu
+        JMP main_choice_end
+        RETF
+    main_choice_4: ; delete
+        CALL delete_menu
+        JMP main_choice_end
+        RETF
+    main_choice_5: ; exit
+        CALL exit_menu
+        JMP main_choice_end
+        RETF
+    main_choice_other:
+        CALL raise_error
+        RETF
+    main_choice_end:
+
+mov ah, 4Ch
+int 21h
+
+main endp
+end main
